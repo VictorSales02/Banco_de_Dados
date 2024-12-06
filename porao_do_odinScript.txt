@@ -1,0 +1,85 @@
+create database porao_do_odin
+
+create table usuario(
+	id SERIAL primary key,
+	nome VARCHAR(100),
+	idade int,
+	email varchar(100),
+	senha varchar(100),
+	id_loja int references loja(id) on delete cascade,
+	id_jogo int references jogo(id) on delete cascade
+);
+
+create table genero(
+	id serial primary key,
+	nome varchar(100)
+);
+
+create table franquia(
+	id serial primary key,
+	nome varchar(100),
+	criador varchar(100)
+);
+
+create table jogo(
+	id serial primary key,
+	nome varchar(100),
+	distribuidora varchar(100),
+	id_genero int references genero(id) on delete cascade,
+	id_franquia int references franquia(id) on delete cascade
+);
+	
+create table loja(
+	id serial primary key,
+	nome varchar(100),
+	empresa varchar(100)
+);
+
+insert into usuario(nome, idade, email, senha, id_loja, id_jogo) values ('Victor', 18, 'vitu@email.com', 'vitu123', 1, 1);
+insert into usuario(nome, idade, email, senha, id_loja, id_jogo) values ('Wuldson', 17, 'wuld@email.com', 'wuld123', 1, 2);
+insert into usuario(nome, idade, email, senha, id_loja, id_jogo) values ('Alicia', 20, 'alicia@email.com', 'ali123', 3, 3);
+insert into usuario(nome, idade, email, senha, id_loja, id_jogo) values ('Marina', 22, 'mari@email.com', 'mari123', 2, 4);
+insert into usuario(nome, idade, email, senha, id_loja, id_jogo) values ('Nicolas', 25, 'nico@email.com', 'nico123', 1,5);
+
+insert into genero(nome) values ('Luta');
+insert into genero(nome) values ('Souslike');
+insert into genero(nome) values ('Simulador de Vida');
+insert into genero(nome) values ('RPG');
+insert into genero(nome) values ('Roguelike');
+
+insert into franquia(nome, criador) values ('Dragon Ball', 'Akira Toriyama');
+insert into franquia(nome, criador) values ('Dark Souls', 'Hidetaka Miyazaki');
+insert into franquia(nome, criador) values ('The Sims', 'Will Wright');
+insert into franquia(nome, criador) values ('Baldurs Gate', 'Bioware');
+insert into franquia(nome, criador) values ('Hades', 'Supergiant Games');
+
+insert into loja(nome, empresa) values ('Steam', 'Valve');
+insert into loja(nome, empresa) values ('Epic Games Launcher', 'Epic Games');
+insert into loja(nome, empresa) values ('EA', 'EA');
+insert into loja(nome, empresa) values ('Minecraft Launcher', 'Mojang');
+
+insert into jogo(nome, distribuidora, id_genero, id_franquia) values ('Dragon Ball Sparking Zero', 'Bandai Namco', 1, 1);
+insert into jogo(nome, distribuidora, id_genero, id_franquia) values ('Dark Souls III', 'Bandai Namco', 2, 2);
+insert into jogo(nome, distribuidora, id_genero, id_franquia) values ('The Sims 4', 'EA', 3, 3);
+insert into jogo(nome, distribuidora, id_genero, id_franquia) values ('Baldurs Gate, Dark Alliance', 'Larian Studios', 4, 4);
+insert into jogo(nome, distribuidora, id_genero, id_franquia) values ('Hades', 'Supergiant Games', 5, 5);
+
+select * from genero;
+
+select * from usuario;
+
+select * from franquia;
+
+select * from loja;
+
+select * from jogo;
+
+select 
+	j.nome,
+	j.distribuidora,
+	f.nome,
+	f.criador
+from
+	jogo j
+join
+	franquia f on f.id = j.id_franquia;
